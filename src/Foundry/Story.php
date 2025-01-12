@@ -12,6 +12,11 @@ use function Zenstruck\Foundry\faker;
 
 final class Story extends FoundryStory
 {
+    private const PARAMETERS = [
+        'title' => 'title',
+        'summary' => 'summary',
+    ];
+
     public function build(): void
     {
         $this->createOne();
@@ -31,6 +36,8 @@ final class Story extends FoundryStory
         $this->createWithOneToOneReference();
 
         $this->createWithAliceSpecialChars();
+
+        $this->createWithMethodCall();
     }
 
     private function createOne(): void
@@ -137,6 +144,19 @@ final class Story extends FoundryStory
 
     private function createWithAliceSpecialChars(): void
     {
-        BookFactory::createOne(['title' => 'title with @foo $bar', 'reference' => FixtureReference::ESCAPE_ALICE_SPECIAL_CHARS]);
+        BookFactory::createOne([
+            'title' => 'title with @foo $bar',
+            'reference' => FixtureReference::ESCAPE_ALICE_SPECIAL_CHARS
+        ]);
+    }
+
+    private function createWithMethodCall(): void
+    {
+        BookFactory::createOne([
+            'title' => 'title',
+            'summary' => 'summary',
+            'reference' => FixtureReference::WITH_METHOD_CALLS,
+            'setIsbn' => faker()->isbn10(),
+        ]);
     }
 }

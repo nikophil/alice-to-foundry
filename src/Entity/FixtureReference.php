@@ -22,4 +22,7 @@ enum FixtureReference: string
     // https://github.com/nelmio/alice/blob/main/doc/complete-reference.md#fixture-reference
     case WITH_ONE_TO_ONE_REFERENCE = 'with one to one reference';
 
+    // https://github.com/nelmio/alice/blob/main/doc/complete-reference.md#calling-methods
+    case WITH_METHOD_CALLS = 'with method calls';
+
 }

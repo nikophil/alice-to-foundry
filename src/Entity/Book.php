@@ -31,4 +31,23 @@ class Book
 
     #[ORM\Column()]
     public string $summary = '';
+
+    #[ORM\Column(nullable: true)]
+    private string|null $isbn = null;
+
+    public function getIsbn(): string|null
+    {
+        return $this->isbn;
+    }
+
+    public function setIsbn(string $isbn): void
+    {
+        $this->isbn = $isbn;
+    }
+
+    public function setTitleAndSummary(string $title, string $summary): void
+    {
+        $this->title = $title;
+        $this->summary = $summary;
+    }
 }

@@ -6,6 +6,10 @@ use App\Entity\BookDetail;
 use App\Entity\FixtureReference;
 
 return [
+    'parameters' => [
+        'title' => 'title',
+        'summary' => 'summary',
+    ],
     Book::class => [
         'book' => [
             'reference' => FixtureReference::CREATE_ONE,
@@ -45,9 +49,23 @@ return [
             'reference' => FixtureReference::WITH_ONE_TO_ONE_REFERENCE,
             'title' => 'Book with reference <current()>',
         ],
-        'book_with_escaped_chars' => [
+        'with_alice_special_chars' => [
             'reference' => FixtureReference::ESCAPE_ALICE_SPECIAL_CHARS,
             'title' => 'title with \@foo \$bar',
+        ],
+        'with_method_calls_1' => [
+            'reference' => FixtureReference::WITH_METHOD_CALLS,
+            '__calls' => [
+                // I'm suspecting a bug here, it needs an extra level of array compared with what's in docs:
+                // https://github.com/nelmio/alice/blob/main/doc/complete-reference.md#calling-methods
+                ['setIsbn' => ['<isbn10()>']],
+
+                // I could not make this work, I'm having the following error:
+                // Could not resolve value during the generation process: Could not find a variable "$title".
+//                 ['setTitleAndSummary' => ['title' => 'title', '$title']]
+
+                ['setTitleAndSummary' => ['<{title}>', '<{summary}>']]
+            ],
         ],
     ],
 
