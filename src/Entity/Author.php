@@ -19,6 +19,7 @@ class Author
     #[ORM\Column()]
     public string $name;
 
+    /** @var Collection<int,Book> */
     #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'author')]
     private Collection $books;
 
@@ -27,6 +28,9 @@ class Author
         $this->books = new ArrayCollection();
     }
 
+    /**
+     * @return Collection<int,Book>
+     */
     public function getBooks(): Collection
     {
         return $this->books;

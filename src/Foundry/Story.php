@@ -23,7 +23,7 @@ final class Story extends FoundryStory
 
         // create using faker
         BookFactory::createOne([
-            'title' => faker()->bookTitle(),
+            'title' => faker()->bookTitle(), // @phpstan-ignore method.notFound
             'summary' => faker()->sentence(3, false),
             'reference' => FixtureReference::USING_FAKER
         ]);

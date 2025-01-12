@@ -70,7 +70,7 @@ final class AliceVersusFoundryTest extends KernelTestCase
         self::assertSame($books[0]->author, $books[1]->author);
     }
 
-    public static function provideSource(): iterable
+    public static function provideSource(): iterable // @phpstan-ignore missingType.iterableValue
     {
         yield ['alice'];
         yield ['foundry'];
