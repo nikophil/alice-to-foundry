@@ -24,6 +24,12 @@ return [
             'title' => '<bookTitle()>',
             'summary' => '<sentence(3, false)>',
         ],
+        'book using faker optional' => [
+            'reference' => FixtureReference::USING_FAKER_OPTIONAL,
+
+            // "0%" so that it is never called
+            'title' => '00%? <bookTitle()>',
+        ],
         'book using author' => [
             'reference' => FixtureReference::WITH_MANY_TO_ONE,
             'title' => 'Foundation',
@@ -70,7 +76,7 @@ return [
         'method_calls_with_faker_modifiers' => [
             'reference' => FixtureReference::WITH_METHOD_CALLS_WITH_FAKER_MODIFIED,
             '__calls' => [
-                // "0%" so that it never called
+                // "0%" so that it is never called
                 ['setIsbn (0%?)' => ['<isbn10()>']],
 
                 ['setTitleAndSummary' => ['title (unique)' => '<bookTitle()>', 'summary' => 'summary>']],

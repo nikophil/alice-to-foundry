@@ -7,9 +7,11 @@ namespace App\Entity;
 enum FixtureReference: string
 {
     case CREATE_ONE = 'create one';
-    case USING_FAKER = 'using faker';
     case WITH_MANY_TO_ONE = 'with many to one';
     case ESCAPE_ALICE_SPECIAL_CHARS = 'escape alice special chars';
+
+    case USING_FAKER = 'using faker';
+    case USING_FAKER_OPTIONAL = 'using faker optional';
 
     // https://github.com/nelmio/alice/blob/main/doc/relations-handling.md#multiple-references
     case CREATE_MANY = 'create many';

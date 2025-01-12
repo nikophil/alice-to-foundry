@@ -29,6 +29,8 @@ final class Story extends FoundryStory
 
         $this->createUsingFaker();
 
+        $this->createUsingFakerOptional();
+
         $this->createWithManyToOne();
 
         $this->createWithOneToMany();
@@ -64,6 +66,14 @@ final class Story extends FoundryStory
             'title' => faker()->bookTitle(), // @phpstan-ignore method.notFound
             'summary' => faker()->sentence(3, false),
             'reference' => FixtureReference::USING_FAKER
+        ]);
+    }
+
+    private function createUsingFakerOptional(): void
+    {
+        BookFactory::createOne([
+            'title' => faker()->optional(0)->bookTitle(), // @phpstan-ignore method.notFound
+            'reference' => FixtureReference::USING_FAKER_OPTIONAL
         ]);
     }
 

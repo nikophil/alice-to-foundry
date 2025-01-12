@@ -52,6 +52,15 @@ final class AliceVersusFoundryTest extends KernelTestCase
     }
 
     #[DataProvider('provideSource')]
+    public function testUsingFakerOptional(string $source): void
+    {
+        $books = BookFactory::findBy(['reference' => FixtureReference::USING_FAKER_OPTIONAL, 'source' => $source]);
+
+        self::assertCount(1, $books);
+        self::assertNull($books[0]->title);
+    }
+
+    #[DataProvider('provideSource')]
     public function testWithManyToOne(string $source): void
     {
         $books = BookFactory::findBy(['reference' => FixtureReference::WITH_MANY_TO_ONE, 'source' => $source]);
