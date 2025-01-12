@@ -14,6 +14,9 @@ class Book
     #[ORM\Column()]
     public int $id;
 
+    #[ORM\ManyToOne()]
+    public Author|null $author;
+
     #[ORM\Column()]
     public string $reference;
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Entity\Author;
 use App\Entity\Book;
 
 return [
@@ -16,6 +17,17 @@ return [
             'reference' => 'using faker',
             'title' => '<bookTitle()>',
             'summary' => '<sentence(3, false)>',
+        ],
+        'book using author' => [
+            'reference' => 'with many to one',
+            'title' => 'Foundation',
+            'author' => '@asimov',
+        ],
+    ],
+
+    Author::class => [
+        'asimov' => [
+            'name' => 'Isaac Asimov',
         ],
     ],
 ];

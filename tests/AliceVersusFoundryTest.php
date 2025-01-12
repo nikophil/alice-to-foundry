@@ -14,7 +14,7 @@ use Zenstruck\Foundry\Attribute\WithStory;
 use Zenstruck\Foundry\Test\Factories;
 
 #[WithStory(Story::class)]
-final class FoundryTest extends KernelTestCase
+final class AliceVersusFoundryTest extends KernelTestCase
 {
     use ReloadDatabaseTrait;
     use Factories;
@@ -46,6 +46,16 @@ final class FoundryTest extends KernelTestCase
         self::assertCount(1, $books);
         self::assertContains($books[0]->title, BookTitleProvider::BOOK_TITLES);
         self::assertCount(3, explode(' ', $books[0]->summary));
+    }
+
+    #[DataProvider('provideSource')]
+    public function testWithManyToOne(string $source): void
+    {
+        $books = BookFactory::findBy(['reference' => 'with many to one', 'source' => $source]);
+
+        self::assertCount(1, $books);
+        self::assertNotNull($books[0]->author);
+        self::assertSame('Isaac Asimov', $books[0]->author->name);
     }
 
     public static function provideSource(): iterable
