@@ -15,7 +15,7 @@ class Book
     public int $id;
 
     #[ORM\ManyToOne(inversedBy: 'books')]
-    public Author|null $author;
+    public Author|null $author = null;
 
     #[ORM\Column()]
     public FixtureReference $reference;

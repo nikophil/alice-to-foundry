@@ -19,6 +19,7 @@ final class AuthorFactory extends PersistentObjectFactory
     protected function defaults(): array
     {
         return [
+            'source' => 'foundry',
             'name' => self::faker()->name(),
         ];
     }

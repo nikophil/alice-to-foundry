@@ -8,5 +8,6 @@ when@dev: &dev
             - 'file'
             - 'md5'
             - 'sha1'
+        seed: null
 
 when@test: *dev

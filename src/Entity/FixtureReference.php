@@ -11,4 +11,5 @@ enum FixtureReference: string
     case USING_FAKER = 'using faker';
     case WITH_MANY_TO_ONE = 'with many to one';
     case WITH_ONE_TO_MANY = 'with one to many';
+    case WITH_ONE_TO_MANY_RANDOM = 'with one to many random';
 }

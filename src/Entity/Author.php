@@ -17,6 +17,12 @@ class Author
     public int $id;
 
     #[ORM\Column()]
+    public FixtureReference $reference;
+
+    #[ORM\Column()]
+    public string $source = 'alice';
+
+    #[ORM\Column()]
     public string $name;
 
     /** @var Collection<int,Book> */

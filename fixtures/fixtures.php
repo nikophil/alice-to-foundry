@@ -32,15 +32,26 @@ return [
             'reference' => FixtureReference::WITH_ONE_TO_MANY,
             'title' => 'Dune messiah',
         ],
+        'some_book_{1..3}' => [
+            'reference' => FixtureReference::WITH_ONE_TO_MANY_RANDOM,
+            'title' => 'Random book <current()>',
+        ],
     ],
 
     Author::class => [
         'asimov' => [
+            'reference' => FixtureReference::WITH_MANY_TO_ONE,
             'name' => 'Isaac Asimov',
         ],
         'herbert' => [
+            'reference' => FixtureReference::WITH_ONE_TO_MANY,
             'name' => 'Frank Herbert',
             'books' => ['@book_for_author_1', '@book_for_author_2']
+        ],
+        'author_with_random_books' => [
+            'reference' => FixtureReference::WITH_ONE_TO_MANY_RANDOM,
+            'name' => 'Some author',
+            'books' => '2x @some_book_*',
         ],
     ],
 ];

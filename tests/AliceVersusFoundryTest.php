@@ -6,6 +6,7 @@ namespace App\Tests;
 
 use App\Entity\FixtureReference;
 use App\Faker\BookTitleProvider;
+use App\Foundry\AuthorFactory;
 use App\Foundry\BookFactory;
 use App\Foundry\Story;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
@@ -68,6 +69,24 @@ final class AliceVersusFoundryTest extends KernelTestCase
         self::assertNotNull($books[0]->author);
         self::assertSame('Frank Herbert', $books[0]->author->name);
         self::assertSame($books[0]->author, $books[1]->author);
+    }
+
+    #[DataProvider('provideSource')]
+    public function testWithOneToManyRandom(string $source): void
+    {
+        BookFactory::assert()->count(3, ['reference' => FixtureReference::WITH_ONE_TO_MANY_RANDOM, 'source' => $source]);
+
+        $author = AuthorFactory::repository()->findOneBy(['reference' => FixtureReference::WITH_ONE_TO_MANY_RANDOM, 'source' => $source]);
+        self::assertNotNull($author);
+
+        // we cannot predict the number in advance, because of a bug in Alice:
+        // if the same book is randomly picked twice, it will be added to the collection only once ¯\_(ツ)_/¯
+        // (or I don't know how to use it properly)
+        self::assertGreaterThan(0, $author->getBooks()->count());
+
+        foreach ($author->getBooks() as $book) {
+            self::assertStringContainsString('Random book', $book->title);
+        }
     }
 
     public static function provideSource(): iterable // @phpstan-ignore missingType.iterableValue
