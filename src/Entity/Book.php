@@ -18,7 +18,7 @@ class Book
     public Author|null $author;
 
     #[ORM\Column()]
-    public string $reference;
+    public FixtureReference $reference;
 
     #[ORM\Column()]
     public string $source = 'alice';

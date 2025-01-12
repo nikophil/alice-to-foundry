@@ -2,24 +2,25 @@
 
 use App\Entity\Author;
 use App\Entity\Book;
+use App\Entity\FixtureReference;
 
 return [
     Book::class => [
         'book' => [
-            'reference' => 'create one',
+            'reference' => FixtureReference::CREATE_ONE,
             'title' => 'Foundation',
         ],
         'book{1..2}' => [
-            'reference' => 'create many',
+            'reference' => FixtureReference::CREATE_MANY,
             'title' => 'book <current()>',
         ],
         'book using faker' => [
-            'reference' => 'using faker',
+            'reference' => FixtureReference::USING_FAKER,
             'title' => '<bookTitle()>',
             'summary' => '<sentence(3, false)>',
         ],
         'book using author' => [
-            'reference' => 'with many to one',
+            'reference' => FixtureReference::WITH_MANY_TO_ONE,
             'title' => 'Foundation',
             'author' => '@asimov',
         ],

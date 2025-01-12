@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
+use App\Entity\FixtureReference;
 use App\Faker\BookTitleProvider;
 use App\Foundry\BookFactory;
 use App\Foundry\Story;
@@ -22,7 +23,7 @@ final class AliceVersusFoundryTest extends KernelTestCase
     #[DataProvider('provideSource')]
     public function testCreateOne(string $source): void
     {
-        $book = BookFactory::findBy(['reference' => 'create one', 'source' => $source]);
+        $book = BookFactory::findBy(['reference' => FixtureReference::CREATE_ONE, 'source' => $source]);
 
         self::assertCount(1, $book);
         self::assertSame('Foundation', $book[0]->title);
@@ -31,7 +32,7 @@ final class AliceVersusFoundryTest extends KernelTestCase
     #[DataProvider('provideSource')]
     public function testCreateMany(string $source): void
     {
-        $books = BookFactory::repository()->findBy(['reference' => 'create many', 'source' => $source], orderBy: ['title' => 'ASC']);
+        $books = BookFactory::repository()->findBy(['reference' => FixtureReference::CREATE_MANY, 'source' => $source], orderBy: ['title' => 'ASC']);
 
         self::assertCount(2, $books);
         self::assertSame('book 1', $books[0]->title);
@@ -41,7 +42,7 @@ final class AliceVersusFoundryTest extends KernelTestCase
     #[DataProvider('provideSource')]
     public function testUsingFaker(string $source): void
     {
-        $books = BookFactory::findBy(['reference' => 'using faker', 'source' => $source]);
+        $books = BookFactory::findBy(['reference' => FixtureReference::USING_FAKER, 'source' => $source]);
 
         self::assertCount(1, $books);
         self::assertContains($books[0]->title, BookTitleProvider::BOOK_TITLES);
@@ -51,7 +52,7 @@ final class AliceVersusFoundryTest extends KernelTestCase
     #[DataProvider('provideSource')]
     public function testWithManyToOne(string $source): void
     {
-        $books = BookFactory::findBy(['reference' => 'with many to one', 'source' => $source]);
+        $books = BookFactory::findBy(['reference' => FixtureReference::WITH_MANY_TO_ONE, 'source' => $source]);
 
         self::assertCount(1, $books);
         self::assertNotNull($books[0]->author);
