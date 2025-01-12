@@ -18,5 +18,6 @@ class BookDetail
     public string $description;
 
     #[ORM\OneToOne(inversedBy: 'bookDetail')]
+    #[ORM\JoinColumn(nullable: false)]
     public Book $book;
 }

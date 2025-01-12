@@ -12,6 +12,9 @@ use function Zenstruck\Foundry\faker;
 
 final class Story extends FoundryStory
 {
+    // this const is here to mimic the "parameters" in fixtures.php
+    // another solution would be to resolve them directly in the methods
+    // @see method createWithMethodCallWithFakerModifiers()
     private const PARAMETERS = [
         'title' => 'title',
         'summary' => 'summary',
@@ -38,6 +41,8 @@ final class Story extends FoundryStory
         $this->createWithAliceSpecialChars();
 
         $this->createWithMethodCall();
+
+        $this->createWithMethodCallWithFakerModifiers();
     }
 
     private function createOne(): void
@@ -47,8 +52,7 @@ final class Story extends FoundryStory
 
     private function createMany(): void
     {
-        BookFactory::createMany(2, fn(int $i) => ['title' => "book {$i}", 'reference' => FixtureReference::CREATE_MANY]
-        );
+        BookFactory::createMany(2, fn(int $i) => ['title' => "book {$i}", 'reference' => FixtureReference::CREATE_MANY]);
     }
 
     private function createUsingFaker(): void
@@ -62,8 +66,7 @@ final class Story extends FoundryStory
 
     private function createWithManyToOne(): void
     {
-        $author = AuthorFactory::createOne(['name' => 'Isaac Asimov', 'reference' => FixtureReference::WITH_MANY_TO_ONE]
-        );
+        $author = AuthorFactory::createOne(['name' => 'Isaac Asimov', 'reference' => FixtureReference::WITH_MANY_TO_ONE]);
         BookFactory::createOne(['author' => $author, 'reference' => FixtureReference::WITH_MANY_TO_ONE]);
 
         // OR, other (better) solution
@@ -153,10 +156,29 @@ final class Story extends FoundryStory
     private function createWithMethodCall(): void
     {
         BookFactory::createOne([
-            'title' => 'title',
-            'summary' => 'summary',
             'reference' => FixtureReference::WITH_METHOD_CALLS,
             'setIsbn' => faker()->isbn10(),
+
+            // there is currently no way to call a method with multiple arguments in Foundry
+            // so, we cannot call setTitleAndSummary() method
+            'title' => self::PARAMETERS['title'],
+            'summary' => self::PARAMETERS['summary'],
         ]);
+    }
+
+    private function createWithMethodCallWithFakerModifiers(): void
+    {
+        $attributes = [
+            'reference' => FixtureReference::WITH_METHOD_CALLS_WITH_FAKER_MODIFIED,
+            'title' => faker()->unique()->bookTitle(), // @phpstan-ignore method.notFound
+            'summary' => 'summary',
+        ];
+
+        $isbn = faker()->optional(0)->isbn10();
+        if (null !== $isbn) { // @phpstan-ignore notIdentical.alwaysTrue (it seems that faker's optional() is not well typed)
+            $attributes['setIsbn'] = $isbn;
+        }
+
+        BookFactory::createOne($attributes);
     }
 }

@@ -53,7 +53,7 @@ return [
             'reference' => FixtureReference::ESCAPE_ALICE_SPECIAL_CHARS,
             'title' => 'title with \@foo \$bar',
         ],
-        'with_method_calls_1' => [
+        'with_method_calls' => [
             'reference' => FixtureReference::WITH_METHOD_CALLS,
             '__calls' => [
                 // I'm suspecting a bug here, it needs an extra level of array compared with what's in docs:
@@ -62,9 +62,18 @@ return [
 
                 // I could not make this work, I'm having the following error:
                 // Could not resolve value during the generation process: Could not find a variable "$title".
-//                 ['setTitleAndSummary' => ['title' => 'title', '$title']]
+                // ['setTitleAndSummary' => ['title' => 'title', '$title']],
 
-                ['setTitleAndSummary' => ['<{title}>', '<{summary}>']]
+                ['setTitleAndSummary' => ['<{title}>', '<{summary}>']],
+            ],
+        ],
+        'method_calls_with_faker_modifiers' => [
+            'reference' => FixtureReference::WITH_METHOD_CALLS_WITH_FAKER_MODIFIED,
+            '__calls' => [
+                // "0%" so that it never called
+                ['setIsbn (0%?)' => ['<isbn10()>']],
+
+                ['setTitleAndSummary' => ['title (unique)' => '<bookTitle()>', 'summary' => 'summary>']],
             ],
         ],
     ],

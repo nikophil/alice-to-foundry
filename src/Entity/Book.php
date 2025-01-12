@@ -26,11 +26,11 @@ class Book
     #[ORM\Column()]
     public string $source = 'alice';
 
-    #[ORM\Column()]
-    public string $title;
+    #[ORM\Column(nullable: true)]
+    public string|null $title = null;
 
-    #[ORM\Column()]
-    public string $summary = '';
+    #[ORM\Column(nullable: true)]
+    public string|null $summary = null;
 
     #[ORM\Column(nullable: true)]
     private string|null $isbn = null;

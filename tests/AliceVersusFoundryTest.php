@@ -48,7 +48,7 @@ final class AliceVersusFoundryTest extends KernelTestCase
 
         self::assertCount(1, $books);
         self::assertContains($books[0]->title, BookTitleProvider::BOOK_TITLES);
-        self::assertCount(3, explode(' ', $books[0]->summary));
+        self::assertCount(3, explode(' ', $books[0]->summary ?? ''));
     }
 
     #[DataProvider('provideSource')]
@@ -89,7 +89,7 @@ final class AliceVersusFoundryTest extends KernelTestCase
         self::assertGreaterThan(0, $author->getBooks()->count());
 
         foreach ($author->getBooks() as $book) {
-            self::assertStringContainsString('Random book', $book->title);
+            self::assertStringContainsString('Random book', $book->title ?? '');
         }
     }
 
@@ -113,8 +113,8 @@ final class AliceVersusFoundryTest extends KernelTestCase
         $books = BookFactory::repository()->findBy(['reference' => FixtureReference::WITH_ONE_TO_ONE_REFERENCE, 'source' => $source]);
 
         self::assertCount(2, $books);
-        self::assertSame($books[0], $books[0]->bookDetail->book);
-        self::assertSame($books[1], $books[1]->bookDetail->book);
+        self::assertSame($books[0], $books[0]->bookDetail?->book);
+        self::assertSame($books[1], $books[1]->bookDetail?->book);
     }
 
     #[DataProvider('provideSource')]
@@ -135,6 +135,18 @@ final class AliceVersusFoundryTest extends KernelTestCase
         self::assertNotNull($book->getIsbn());
         self::assertSame('title', $book->title);
         self::assertSame('summary', $book->summary);
+    }
+
+    #[DataProvider('provideSource')]
+    public function testWithMethodCallsWithFakerModifiers(string $source): void
+    {
+        $book = BookFactory::repository()->findOneBy(['reference' => FixtureReference::WITH_METHOD_CALLS_WITH_FAKER_MODIFIED, 'source' => $source]);
+
+        self::assertNotNull($book);
+        self::assertNull($book->getIsbn());
+
+        // cannot currently test optional()
+        self::assertContains($book->title, BookTitleProvider::BOOK_TITLES);
     }
 
     public static function provideSource(): iterable // @phpstan-ignore missingType.iterableValue
