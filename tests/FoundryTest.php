@@ -27,6 +27,16 @@ final class FoundryTest extends KernelTestCase
         self::assertSame('Foundation', $book[0]->title);
     }
 
+    #[DataProvider('provideSource')]
+    public function testCreateMany(string $source): void
+    {
+        $books = BookFactory::repository()->findBy(['reference' => 'create many', 'source' => $source], orderBy: ['title' => 'ASC']);
+
+        self::assertCount(2, $books);
+        self::assertSame('book 1', $books[0]->title);
+        self::assertSame('book 2', $books[1]->title);
+    }
+
     public static function provideSource(): iterable
     {
         yield ['alice'];
