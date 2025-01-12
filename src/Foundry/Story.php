@@ -25,6 +25,8 @@ final class Story extends FoundryStory
         $this->createWithOneToMany();
 
         $this->createWithOneToManyRandom();
+
+        $this->createWithGapsInIndex();
     }
 
     private function createOne(): void
@@ -93,5 +95,14 @@ final class Story extends FoundryStory
             'name' => 'Some author',
             'books' => BookFactory::randomSet(2, ['reference' => FixtureReference::WITH_ONE_TO_MANY_RANDOM])
         ]);
+    }
+
+    // I really don't know if this is really used
+    // It does not seem useful
+    private function createWithGapsInIndex(): void
+    {
+        for ($i = 1; $i <= 5; $i += 2) {
+            BookFactory::createOne(['title' => "Book with gap {$i}", 'reference' => FixtureReference::WITH_GAP]);
+        }
     }
 }

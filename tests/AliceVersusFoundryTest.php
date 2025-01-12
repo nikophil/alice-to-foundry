@@ -33,7 +33,8 @@ final class AliceVersusFoundryTest extends KernelTestCase
     #[DataProvider('provideSource')]
     public function testCreateMany(string $source): void
     {
-        $books = BookFactory::repository()->findBy(['reference' => FixtureReference::CREATE_MANY, 'source' => $source], orderBy: ['title' => 'ASC']);
+        $books = BookFactory::repository()->findBy(['reference' => FixtureReference::CREATE_MANY, 'source' => $source],
+            orderBy: ['title' => 'ASC']);
 
         self::assertCount(2, $books);
         self::assertSame('book 1', $books[0]->title);
@@ -74,9 +75,12 @@ final class AliceVersusFoundryTest extends KernelTestCase
     #[DataProvider('provideSource')]
     public function testWithOneToManyRandom(string $source): void
     {
-        BookFactory::assert()->count(3, ['reference' => FixtureReference::WITH_ONE_TO_MANY_RANDOM, 'source' => $source]);
+        BookFactory::assert()->count(3, ['reference' => FixtureReference::WITH_ONE_TO_MANY_RANDOM, 'source' => $source]
+        );
 
-        $author = AuthorFactory::repository()->findOneBy(['reference' => FixtureReference::WITH_ONE_TO_MANY_RANDOM, 'source' => $source]);
+        $author = AuthorFactory::repository()->findOneBy(
+            ['reference' => FixtureReference::WITH_ONE_TO_MANY_RANDOM, 'source' => $source]
+        );
         self::assertNotNull($author);
 
         // we cannot predict the number in advance, because of a bug in Alice:
@@ -87,6 +91,20 @@ final class AliceVersusFoundryTest extends KernelTestCase
         foreach ($author->getBooks() as $book) {
             self::assertStringContainsString('Random book', $book->title);
         }
+    }
+
+    #[DataProvider('provideSource')]
+    public function testGapsInIndex(string $source): void
+    {
+        $books = BookFactory::repository()->findBy(
+            ['reference' => FixtureReference::WITH_GAP, 'source' => $source],
+            orderBy: ['title' => 'ASC']
+        );
+
+        self::assertCount(3, $books);
+        self::assertSame('Book with gap 1', $books[0]->title);
+        self::assertSame('Book with gap 3', $books[1]->title);
+        self::assertSame('Book with gap 5', $books[2]->title);
     }
 
     public static function provideSource(): iterable // @phpstan-ignore missingType.iterableValue

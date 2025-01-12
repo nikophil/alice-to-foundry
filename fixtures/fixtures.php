@@ -36,6 +36,10 @@ return [
             'reference' => FixtureReference::WITH_ONE_TO_MANY_RANDOM,
             'title' => 'Random book <current()>',
         ],
+        'book_with_gaps_{1..5, 2}' => [
+            'reference' => FixtureReference::WITH_GAP,
+            'title' => 'Book with gap <current()>',
+        ],
     ],
 
     Author::class => [

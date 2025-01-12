@@ -12,4 +12,5 @@ enum FixtureReference: string
     case WITH_MANY_TO_ONE = 'with many to one';
     case WITH_ONE_TO_MANY = 'with one to many';
     case WITH_ONE_TO_MANY_RANDOM = 'with one to many random';
+    case WITH_GAP = 'with gap in fixture index';
 }
