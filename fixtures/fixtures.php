@@ -45,6 +45,10 @@ return [
             'reference' => FixtureReference::WITH_ONE_TO_ONE_REFERENCE,
             'title' => 'Book with reference <current()>',
         ],
+        'book_with_escaped_chars' => [
+            'reference' => FixtureReference::ESCAPE_ALICE_SPECIAL_CHARS,
+            'title' => 'title with \@foo \$bar',
+        ],
     ],
 
     Author::class => [

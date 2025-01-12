@@ -117,6 +117,15 @@ final class AliceVersusFoundryTest extends KernelTestCase
         self::assertSame($books[1], $books[1]->bookDetail->book);
     }
 
+    #[DataProvider('provideSource')]
+    public function testUsingAliceSpecialChars(string $source): void
+    {
+        $book = BookFactory::repository()->findOneBy(['reference' => FixtureReference::ESCAPE_ALICE_SPECIAL_CHARS, 'source' => $source]);
+
+        self::assertNotNull($book);
+        self::assertSame('title with @foo $bar', $book->title);
+    }
+
     public static function provideSource(): iterable // @phpstan-ignore missingType.iterableValue
     {
         yield ['alice'];

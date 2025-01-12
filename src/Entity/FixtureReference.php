@@ -9,6 +9,7 @@ enum FixtureReference: string
     case CREATE_ONE = 'create one';
     case USING_FAKER = 'using faker';
     case WITH_MANY_TO_ONE = 'with many to one';
+    case ESCAPE_ALICE_SPECIAL_CHARS = 'escape alice special chars';
 
     // https://github.com/nelmio/alice/blob/main/doc/relations-handling.md#multiple-references
     case CREATE_MANY = 'create many';
@@ -20,4 +21,5 @@ enum FixtureReference: string
 
     // https://github.com/nelmio/alice/blob/main/doc/complete-reference.md#fixture-reference
     case WITH_ONE_TO_ONE_REFERENCE = 'with one to one reference';
+
 }

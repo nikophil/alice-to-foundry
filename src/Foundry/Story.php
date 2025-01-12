@@ -29,6 +29,8 @@ final class Story extends FoundryStory
         $this->createWithGapsInIndex();
 
         $this->createWithOneToOneReference();
+
+        $this->createWithAliceSpecialChars();
     }
 
     private function createOne(): void
@@ -131,5 +133,10 @@ final class Story extends FoundryStory
         // foreach ($books as $book) {
         //     $book->bookDetail = BookDetailFactory::createOne(['book' => $book]);
         // }
+    }
+
+    private function createWithAliceSpecialChars(): void
+    {
+        BookFactory::createOne(['title' => 'title with @foo $bar', 'reference' => FixtureReference::ESCAPE_ALICE_SPECIAL_CHARS]);
     }
 }
