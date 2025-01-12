@@ -14,7 +14,7 @@ class Book
     #[ORM\Column()]
     public int $id;
 
-    #[ORM\ManyToOne()]
+    #[ORM\ManyToOne(inversedBy: 'books')]
     public Author|null $author;
 
     #[ORM\Column()]

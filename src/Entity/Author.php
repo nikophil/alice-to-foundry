@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -16,4 +18,33 @@ class Author
 
     #[ORM\Column()]
     public string $name;
+
+    #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'author')]
+    private Collection $books;
+
+    public function __construct()
+    {
+        $this->books = new ArrayCollection();
+    }
+
+    public function getBooks(): Collection
+    {
+        return $this->books;
+    }
+
+    public function addBook(Book $book): void
+    {
+        if (!$this->books->contains($book)) {
+            $this->books->add($book);
+            $book->author = $this;
+        }
+    }
+
+    public function removeBook(Book $book): void
+    {
+        if ($this->books->contains($book)) {
+            $this->books->removeElement($book);
+            $book->author = null;
+        }
+    }
 }

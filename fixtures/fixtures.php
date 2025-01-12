@@ -24,11 +24,23 @@ return [
             'title' => 'Foundation',
             'author' => '@asimov',
         ],
+        'book_for_author_1' => [
+            'reference' => FixtureReference::WITH_ONE_TO_MANY,
+            'title' => 'Dune',
+        ],
+        'book_for_author_2' => [
+            'reference' => FixtureReference::WITH_ONE_TO_MANY,
+            'title' => 'Dune messiah',
+        ],
     ],
 
     Author::class => [
         'asimov' => [
             'name' => 'Isaac Asimov',
+        ],
+        'herbert' => [
+            'name' => 'Frank Herbert',
+            'books' => ['@book_for_author_1', '@book_for_author_2']
         ],
     ],
 ];

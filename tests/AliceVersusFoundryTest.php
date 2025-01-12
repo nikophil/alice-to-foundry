@@ -59,6 +59,17 @@ final class AliceVersusFoundryTest extends KernelTestCase
         self::assertSame('Isaac Asimov', $books[0]->author->name);
     }
 
+    #[DataProvider('provideSource')]
+    public function testWithOneToMany(string $source): void
+    {
+        $books = BookFactory::findBy(['reference' => FixtureReference::WITH_ONE_TO_MANY, 'source' => $source]);
+
+        self::assertCount(2, $books);
+        self::assertNotNull($books[0]->author);
+        self::assertSame('Frank Herbert', $books[0]->author->name);
+        self::assertSame($books[0]->author, $books[1]->author);
+    }
+
     public static function provideSource(): iterable
     {
         yield ['alice'];
