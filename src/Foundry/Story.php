@@ -6,6 +6,7 @@ namespace App\Foundry;
 
 use App\Entity\FixtureReference;
 use Doctrine\Common\Collections\ArrayCollection;
+use Zenstruck\Foundry\Object\Instantiator;
 use Zenstruck\Foundry\Story as FoundryStory;
 
 use function Zenstruck\Foundry\faker;
@@ -43,6 +44,8 @@ final class Story extends FoundryStory
         $this->createWithMethodCall();
 
         $this->createWithMethodCallWithFakerModifiers();
+
+        $this->createUsingNamedConstructor();
     }
 
     private function createOne(): void
@@ -180,5 +183,16 @@ final class Story extends FoundryStory
         }
 
         BookFactory::createOne($attributes);
+    }
+
+    private function createUsingNamedConstructor(): void
+    {
+        BookFactory::new([
+            'author' => AuthorFactory::new(['name' => 'Isaac Asimov', 'reference' => FixtureReference::USING_NAMED_CONSTRUCTOR]),
+            'title' => 'Foundation',
+            'reference' => FixtureReference::USING_NAMED_CONSTRUCTOR,
+        ])
+            ->instantiateWith(Instantiator::namedConstructor('create'))
+            ->create();
     }
 }

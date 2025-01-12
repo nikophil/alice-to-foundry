@@ -35,6 +35,15 @@ class Book
     #[ORM\Column(nullable: true)]
     private string|null $isbn = null;
 
+    public static function create(Author $author, string $title): self
+    {
+        $book = new self();
+        $book->author = $author;
+        $book->title = $title;
+
+        return $book;
+    }
+
     public function getIsbn(): string|null
     {
         return $this->isbn;

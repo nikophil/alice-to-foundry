@@ -149,6 +149,15 @@ final class AliceVersusFoundryTest extends KernelTestCase
         self::assertContains($book->title, BookTitleProvider::BOOK_TITLES);
     }
 
+    #[DataProvider('provideSource')]
+    public function testUsingNamedConstructor(string $source): void
+    {
+        $book = BookFactory::repository()->findOneBy(['reference' => FixtureReference::USING_NAMED_CONSTRUCTOR, 'source' => $source]);
+
+        self::assertNotNull($book);
+        self::assertSame('Isaac Asimov', $book->author?->name);
+    }
+
     public static function provideSource(): iterable // @phpstan-ignore missingType.iterableValue
     {
         yield ['alice'];

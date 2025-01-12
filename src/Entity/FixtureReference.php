@@ -25,4 +25,7 @@ enum FixtureReference: string
     // https://github.com/nelmio/alice/blob/main/doc/complete-reference.md#calling-methods
     case WITH_METHOD_CALLS = 'with method calls';
     case WITH_METHOD_CALLS_WITH_FAKER_MODIFIED = 'method calls with faker modifiers';
+
+    // https://github.com/nelmio/alice/blob/main/doc/complete-reference.md#using-a-factory--a-named-constructor
+    case USING_NAMED_CONSTRUCTOR = 'using named constructor';
 }

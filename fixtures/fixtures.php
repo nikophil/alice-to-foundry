@@ -76,6 +76,12 @@ return [
                 ['setTitleAndSummary' => ['title (unique)' => '<bookTitle()>', 'summary' => 'summary>']],
             ],
         ],
+        'using_named_constructor' => [
+            'reference' => FixtureReference::USING_NAMED_CONSTRUCTOR,
+            '__factory' => [
+                'create' => ['@asimov', 'Foundation'],
+            ],
+        ],
     ],
 
     Author::class => [
