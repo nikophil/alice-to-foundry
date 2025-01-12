@@ -2,6 +2,7 @@
 
 use App\Entity\Author;
 use App\Entity\Book;
+use App\Entity\BookDetail;
 use App\Entity\FixtureReference;
 
 return [
@@ -40,6 +41,10 @@ return [
             'reference' => FixtureReference::WITH_GAP,
             'title' => 'Book with gap <current()>',
         ],
+        'book_with_reference_{1..2}' => [
+            'reference' => FixtureReference::WITH_ONE_TO_ONE_REFERENCE,
+            'title' => 'Book with reference <current()>',
+        ],
     ],
 
     Author::class => [
@@ -58,4 +63,11 @@ return [
             'books' => '2x @some_book_*',
         ],
     ],
+
+    BookDetail::class => [
+        'book_detail_{@book_with_reference_*}' => [
+            'book' => '<current()>',
+            'description' => 'What an awesome book!',
+        ]
+    ]
 ];

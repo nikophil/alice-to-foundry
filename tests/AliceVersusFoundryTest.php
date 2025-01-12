@@ -107,6 +107,16 @@ final class AliceVersusFoundryTest extends KernelTestCase
         self::assertSame('Book with gap 5', $books[2]->title);
     }
 
+    #[DataProvider('provideSource')]
+    public function testWithReference(string $source): void
+    {
+        $books = BookFactory::repository()->findBy(['reference' => FixtureReference::WITH_ONE_TO_ONE_REFERENCE, 'source' => $source]);
+
+        self::assertCount(2, $books);
+        self::assertSame($books[0], $books[0]->bookDetail->book);
+        self::assertSame($books[1], $books[1]->bookDetail->book);
+    }
+
     public static function provideSource(): iterable // @phpstan-ignore missingType.iterableValue
     {
         yield ['alice'];

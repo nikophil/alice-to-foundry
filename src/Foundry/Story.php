@@ -27,6 +27,8 @@ final class Story extends FoundryStory
         $this->createWithOneToManyRandom();
 
         $this->createWithGapsInIndex();
+
+        $this->createWithOneToOneReference();
     }
 
     private function createOne(): void
@@ -104,5 +106,30 @@ final class Story extends FoundryStory
         for ($i = 1; $i <= 5; $i += 2) {
             BookFactory::createOne(['title' => "Book with gap {$i}", 'reference' => FixtureReference::WITH_GAP]);
         }
+    }
+
+    private function createWithOneToOneReference(): void
+    {
+        // if the OneToOne is inversed:
+        BookFactory::createMany(
+            2,
+            fn(int $i) => [
+                'title' => "Book with reference {$i}",
+                'reference' => FixtureReference::WITH_ONE_TO_ONE_REFERENCE,
+                'bookDetail' => BookDetailFactory::new(),
+            ]
+        );
+
+        // if not inversed:
+        // $books = BookFactory::createMany(
+        //     2,
+        //     fn(int $i) => [
+        //         'title' => "Book with reference {$i}",
+        //         'reference' => FixtureReference::WITH_ONE_TO_ONE_REFERENCE,
+        //     ]
+        // );
+        // foreach ($books as $book) {
+        //     $book->bookDetail = BookDetailFactory::createOne(['book' => $book]);
+        // }
     }
 }

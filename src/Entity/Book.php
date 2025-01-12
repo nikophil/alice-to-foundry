@@ -17,6 +17,9 @@ class Book
     #[ORM\ManyToOne(inversedBy: 'books')]
     public Author|null $author = null;
 
+    #[ORM\OneToOne(mappedBy: 'book')]
+    public BookDetail|null $bookDetail = null;
+
     #[ORM\Column()]
     public FixtureReference $reference;
 
