@@ -12,5 +12,10 @@ return [
             'reference' => 'create many',
             'title' => 'book <current()>',
         ],
+        'book using faker' => [
+            'reference' => 'using faker',
+            'title' => '<bookTitle()>',
+            'summary' => '<sentence(3, false)>',
+        ],
     ],
 ];

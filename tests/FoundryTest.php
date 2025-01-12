@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
+use App\Faker\BookTitleProvider;
 use App\Foundry\BookFactory;
 use App\Foundry\Story;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
@@ -35,6 +36,16 @@ final class FoundryTest extends KernelTestCase
         self::assertCount(2, $books);
         self::assertSame('book 1', $books[0]->title);
         self::assertSame('book 2', $books[1]->title);
+    }
+
+    #[DataProvider('provideSource')]
+    public function testUsingFaker(string $source): void
+    {
+        $books = BookFactory::findBy(['reference' => 'using faker', 'source' => $source]);
+
+        self::assertCount(1, $books);
+        self::assertContains($books[0]->title, BookTitleProvider::BOOK_TITLES);
+        self::assertCount(3, explode(' ', $books[0]->summary));
     }
 
     public static function provideSource(): iterable

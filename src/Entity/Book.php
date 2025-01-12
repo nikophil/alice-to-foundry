@@ -22,4 +22,7 @@ class Book
 
     #[ORM\Column()]
     public string $title;
+
+    #[ORM\Column()]
+    public string $summary = '';
 }

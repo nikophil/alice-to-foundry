@@ -33,7 +33,8 @@ final class BookFactory extends PersistentObjectFactory
     {
         return [
             'source' => 'foundry',
-            'title' => self::faker()->text(),
+            'title' => self::faker()->sentence(3),
+            'summary' => self::faker()->text(),
         ];
     }
 
